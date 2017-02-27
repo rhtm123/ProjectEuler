@@ -8,8 +8,12 @@ Created on Sun Feb 12 13:19:00 2017
 from timeit import default_timer as timer
 
 start = timer()
+
+
 def isprime(n):
     """Returns True if n is prime."""
+    if n==1:
+        return False
     if n == 2:
         return True
     if n == 3:
@@ -30,16 +34,31 @@ def isprime(n):
         w = 6 - w
 
     return True
+    
 
+
+print(isprime(3331))
 count =0
-for i in range(10,1000):
+a =[]
+for i in range(10,1000000):
     string = str(i)
+    kuch = True
     if isprime(i):
-        for j in range(len(string)):
-            if isprime(int(string[1:])) and isprime(int(string[-j:])):
-                print(i)
-            else:
+        for j in range(1,len(string)):
+            # Solution will be faster if we use % and / instead of int(string)
+            a1 = int(string[j:])
+            a2 = int(string[:j])
+            if not isprime(a1) or not isprime(a2):
+                kuch = False
                 break
+        if kuch:
+            count = count+1
+            a.append(i)
+    if count ==11:
+        break
+print(sum(a))
+        
+            
     
     
 end = timer()
